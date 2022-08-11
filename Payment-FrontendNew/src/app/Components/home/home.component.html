@@ -1,0 +1,130 @@
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Payment Bank</a>
+</nav>
+<br>
+<form  [formGroup]="sender">
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label"> Enter Account Number</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control " (focusout)="fetchDetails()"  formControlName="accountNumber">
+    </div> 
+  </div>
+    <br>
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label">Sender Name</label>
+      <div class="col-sm-10">
+        <input  class="form-control " formControlName="customerName" type="text"  placeholder="Sender Name">
+      </div> 
+    </div>
+    
+    <br>
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label">Balance</label>
+      <div class="col-sm-10">
+        <input class="form-control " formControlName="clearBalance" type="text" placeholder="Sender Account Number">
+      </div> 
+    </div> 
+    <br>
+</form>
+
+<form  [formGroup]="receiver">
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label"> Receiver Account Number</label>
+    <div class="col-sm-10">
+      <input appNumbersOnly class="form-control" formControlName="receiverAccountNumber" type="text" placeholder="Sender Account Number">
+    </div> 
+  </div>
+    <br>
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label"> Receiver Name</label>
+      <div class="col-sm-10">
+        <input formControlName="receiverAccountName" class="form-control" type="text" placeholder="Receiver Account Holder Name">
+      </div> 
+    </div>
+    <br>
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label"> BIC</label>
+      <div class="col-sm-10">
+        <input (focusout)="fetchBIC()" class="form-control" formControlName="receiverBIC" type="text" >
+      </div> 
+    </div>
+    <br>
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label"> Bank Name</label>
+      <div class="col-sm-10">
+        <input formControlName="receiverBankName" class="form-control" type="text" >
+      </div> 
+    </div>
+    <br>
+</form>
+
+<form  [formGroup]="employee">
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label"> Select Transfer Type</label>
+    <div class="col-sm-10">
+      <select class="custom-select" formControlName="transferTypeCode">
+        <option selected>select</option>
+        <option *ngFor="let code of transferTypeCodeList |async" [value]="code.value">
+          {{code.name}}
+        </option>
+      </select>
+    </div> 
+  </div>
+ 
+    <!-- <select formControlName="transferTypeCode">
+        <option *ngFor="let code of transferTypeCodeList |async" [value]="code.value">
+          {{code.name}}
+        </option>
+      </select> -->
+      <br> <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"> Select Message Code</label>
+        <div class="col-sm-10">
+          <select class="custom-select" formControlName="messageCode">
+            <option selected>select</option>
+            <option  *ngFor="let messageType of messageCodes |async"
+            [value]="messageType.messageCode" selected>{{messageType.messageCode}}
+            </option>
+          </select>
+        </div> 
+      </div>
+      <!-- <select formControlName="messageCode" >
+        <option  *ngFor="let messageType of messageCodes |async"
+        [value]="messageType.messageCode" selected>{{messageType.messageCode}}
+        </option>
+      </select> -->
+      <br>
+      <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"> Select Currency Type</label>
+        <div class="col-sm-10">
+          <select class="custom-select"  formsControlName="currencyType" #mySelect
+          (change)='updateINR(mySelect.value)'>
+            <option selected>select</option>
+            <option *ngFor="let currency of currencyTypes " [value]="currency.code">
+              {{currency.code}}
+            </option>
+          </select>
+        </div> 
+      </div>
+      <!-- <select formsControlName="currencyType" #mySelect
+      (change)='updateINR(mySelect.value)' >
+        <option *ngFor="let currency of currencyTypes " [value]="currency.code">
+          {{currency.code}}
+        </option>
+      </select> -->
+      <br>
+      <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"> Enter amount</label>
+        <div class="col-sm-10">
+          <input class="form-control" (focusout)="updateINR(mySelect.value)" appNumbersOnly formControlName="amount" placeholder="0" type="text">
+        </div> 
+      </div>
+      <br>
+      <div class="form-group row">
+        <label  class="col-sm-2 col-form-label">Total Amount</label>
+        <div class="col-sm-10">
+          <input class="form-control" formControlName="totalAmount" placeholder="0" type="text">
+        </div> 
+      </div>
+      <br><button class="btn btn-success"  (click)="submit()">Transfer</button>
+    
+</form>
